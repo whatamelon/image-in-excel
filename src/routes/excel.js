@@ -57,7 +57,7 @@ var setDataInWorkSheet = function(ws, item, index) {
   ws.cell(index+2,1).string(item.itemId.toString());
 
   const lastIdx = item.imgLinkTh.lastIndexOf('/');
-  const uploadFolder = path.resolve('./downloadImages'+item.imgLinkTh.substring(lastIdx));
+  const uploadFolder = path.resolve('./images'+item.imgLinkTh.substring(lastIdx));
 
   let pic = ws.addImage({
     path: uploadFolder,
