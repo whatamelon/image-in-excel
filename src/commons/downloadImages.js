@@ -13,7 +13,7 @@ var downloadImages = async function (fileList) {
     const imgCropPromise = fileList.map(async (item) => {
 
         const lastIdx = item.imgLinkTh.lastIndexOf('/');
-        const uploadFolder = path.resolve('./downloadImages'+item.imgLinkTh.substring(lastIdx));
+        const uploadFolder = path.resolve('./images'+item.imgLinkTh.substring(lastIdx));
 
         download(item.imgLinkTh, uploadFolder, function(){});
     });
