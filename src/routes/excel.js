@@ -33,7 +33,8 @@ router.post('/', async (req, res, next) => {
 
     res.setHeader('Access-Control-Allow-Origin', '*');
   
-    logger.info('request comming.'+JSON.parse(req.body.rows).length);
+    logger.info('request comming type : '+ req.body.type);
+    logger.info('request comming data : '+ JSON.parse(req.body.rows).length);
   
     try {
       const downres = await downloadImages(JSON.parse(req.body.rows));
@@ -41,7 +42,7 @@ router.post('/', async (req, res, next) => {
       if(downres == 200) {
 
         setTimeout(async () => {
-          let excelRes = await makeWorkBook(JSON.parse(req.body.rows), res);
+          let excelRes = await makeWorkBook(JSON.parse(req.body.rows), req.body.type , res);
     
           logger.info('excel res : good')
     
