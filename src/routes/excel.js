@@ -32,17 +32,22 @@ var cleanDirectory =  function() {
 router.post('/', async (req, res, next) => {
 
     res.setHeader('Access-Control-Allow-Origin', '*');
+    // res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    // res.setHeader("Content-Disposition", "attachment; filename=" + req.body.fileName);
   
+    console.log(req.body.type)
+    console.log(req.body.rows.length)
+    console.log(req.body.filename)
     logger.info('request comming type : '+ req.body.type);
-    logger.info('request comming data : '+ JSON.parse(req.body.rows).length);
+    logger.info('request comming data : '+ req.body.rows.length);
   
     try {
-      const downres = await downloadImages(JSON.parse(req.body.rows));
+      const downres = await downloadImages(req.body.rows);
       logger.info('downres : good')
       if(downres == 200) {
 
         setTimeout(async () => {
-          let excelRes = await makeWorkBook(JSON.parse(req.body.rows), req.body.type , res);
+          let excelRes = await makeWorkBook(req.body.rows, req.body.type , res, req.body.filename);
     
           logger.info('excel res : good')
     
@@ -54,7 +59,7 @@ router.post('/', async (req, res, next) => {
             logger.warn('SEND XLSX FAIL');
           }
           cleanDirectory();
-        },1000);
+        },3000);
       } else {
         res.status(excelRes).json(null);
         logger.warn('DOWNLOAD IMAGE FAIL');

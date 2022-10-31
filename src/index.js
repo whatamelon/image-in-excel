@@ -9,7 +9,7 @@ const app = express();
 const prod = process.env.NODE_ENV === 'production';
 
 
-app.set('port', prod ? process.env.PORT : 6010);
+app.set('port', prod ? process.env.PORT : 6050);
 
 // app.use(cors());
 app.use(cors({exposedHeaders: '*'}))

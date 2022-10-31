@@ -53,8 +53,8 @@ var setConfigWorkSheet = function(ws, type) {
 var setDataInWorkSheet = function(ws,type , item, index) {
     ws.row(index+2).setHeight(120);
     ws.cell(index+2,1).string(item.srcId.toString());
-    ws.cell(index+2,2).string(item.srcType);
-    ws.cell(index+2,3).string(item.brandSubId);
+    ws.cell(index+2,2).string(item.washType);
+    ws.cell(index+2,3).string(item.brand);
 
     const lastIdx = item.imgLinkTh.lastIndexOf('/');
     const uploadFolder = path.resolve('./images'+item.imgLinkTh.substring(lastIdx));
@@ -88,11 +88,17 @@ var setDataInWorkSheet = function(ws,type , item, index) {
 
     if(type == 'calc') {
         ws.cell(index+2,9).string(item.inDate);
+        ws.cell(index+2,10).string(item.defaultPrice);
+        ws.cell(index+2,11).string(item.specialPrice);
+        ws.cell(index+2,12).string(item.pollutionPrice);
+        ws.cell(index+2,13).string(item.lightPrice);
+        ws.cell(index+2,14).string(item.brandPrice);
+        ws.cell(index+2,15).string(item.totalPrice);
     }
 }
   
   
-var makeWorkBook = async (rows, type , response) => {
+var makeWorkBook = async (rows, type , response, fileName) => {
 
     var wb = new xl.Workbook();
     var ws = wb.addWorksheet('세탁');
@@ -104,7 +110,7 @@ var makeWorkBook = async (rows, type , response) => {
     const promiseResult = await Promise.all(dataWritePromise);
 
     if (promiseResult) {
-        wb.write('/ExcelFile.xlsx',response);
+        wb.write('/'+fileName,response);
         return 200;
     }
     else return 404;
