@@ -56,32 +56,37 @@ var setDataInWorkSheet = function(ws,type , item, index) {
     ws.cell(index+2,2).string(item.washType);
     ws.cell(index+2,3).string(item.brand);
 
-    const lastIdx = item.imgLinkTh.lastIndexOf('/');
-    const uploadFolder = path.resolve('./images'+item.imgLinkTh.substring(lastIdx));
-
-    let pic = ws.addImage({
-        path: uploadFolder,
-        type: 'picture',
-        position: {
-            type: 'twoCellAnchor',
-            from: {
-                row: index+2,
-                colOff: "1mm",
-                col: 4,
-                rowOff: "1mm"
+    if(item.srcType == 'o') {
+        const lastIdx = item.imgLinkTh.lastIndexOf('/');
+        const uploadFolder = path.resolve('./images'+item.imgLinkTh.substring(lastIdx));
+    
+        let pic = ws.addImage({
+            path: uploadFolder,
+            type: 'picture',
+            position: {
+                type: 'twoCellAnchor',
+                from: {
+                    row: index+2,
+                    colOff: "1mm",
+                    col: 4,
+                    rowOff: "1mm"
+                },
+                to: {
+                    row: index+2,
+                    colOff: "25mm",
+                    col: 4,
+                    rowOff: "45mm",
+                },
             },
-            to: {
-                row: index+2,
-                colOff: "25mm",
-                col: 4,
-                rowOff: "45mm",
-            },
-        },
-    });
-    pic.editAs = "twoCell";
+        });
+        pic.editAs = "twoCell";
 
+        ws.cell(index+2,5).string(item.name);
+    } else {
+        ws.cell(index+2,4).string('');
+        ws.cell(index+2,5).string('');
+    }
 
-    ws.cell(index+2,5).string(item.name);
     ws.cell(index+2,6).string(item.snCode);
     ws.cell(index+2,7).string(item.washCode);
     ws.cell(index+2,8).string(item.outDate);

@@ -12,10 +12,12 @@ var download = function(uri, uploadFolder, callback){
 var downloadImages = async function (fileList) {
     const imgCropPromise = fileList.map(async (item) => {
 
-        const lastIdx = item.imgLinkTh.lastIndexOf('/');
-        const uploadFolder = path.resolve('./images'+item.imgLinkTh.substring(lastIdx));
+        if(item.srcType == 'o') {
+            const lastIdx = item.imgLinkTh.lastIndexOf('/');
+            const uploadFolder = path.resolve('./images'+item.imgLinkTh.substring(lastIdx));
 
-        download(item.imgLinkTh, uploadFolder, function(){});
+            download(item.imgLinkTh, uploadFolder, function(){});
+        }
     });
 
     const promiseResult = await Promise.all(imgCropPromise);
