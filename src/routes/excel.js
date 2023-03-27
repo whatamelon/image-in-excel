@@ -59,7 +59,7 @@ router.post('/', async (req, res, next) => {
             logger.warn('SEND XLSX FAIL');
           }
           cleanDirectory();
-        },3000);
+        },10000);
       } else {
         res.status(excelRes).json(null);
         logger.warn('DOWNLOAD IMAGE FAIL');

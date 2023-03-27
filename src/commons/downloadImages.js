@@ -12,7 +12,7 @@ var download = function(uri, uploadFolder, callback){
 var downloadImages = async function (fileList) {
     const imgCropPromise = fileList.map(async (item) => {
 
-        if(item.srcType == 'o') {
+        if(item.imgLinkTh != null) {
             const lastIdx = item.imgLinkTh.lastIndexOf('/');
             const uploadFolder = path.resolve('./images'+item.imgLinkTh.substring(lastIdx));
 

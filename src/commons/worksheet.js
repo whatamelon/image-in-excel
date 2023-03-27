@@ -3,11 +3,17 @@ const xl = require('excel4node');
 const path = require('path');
 
 var setConfigWorkSheet = function(ws, type) {
+
     //style
     ws.column(1).setWidth(10);
-    ws.column(2).setWidth(15);
-    ws.column(3).setWidth(50);
+    ws.column(2).setWidth(10);
+    ws.column(3).setWidth(15);
     ws.column(4).setWidth(20);
+    ws.column(5).setWidth(20);
+    ws.column(6).setWidth(20);
+    ws.column(7).setWidth(20);
+    ws.column(8).setWidth(15);
+    ws.column(9).setWidth(15);
 
     ws.row(1).setHeight(25);
     ws.row(1).freeze();
@@ -22,7 +28,8 @@ var setConfigWorkSheet = function(ws, type) {
             fgColor:'#d3d3d3'
         },
         font:{
-            bold:true
+            bold:true,
+            size:14
         }
     };
 
@@ -51,12 +58,43 @@ var setConfigWorkSheet = function(ws, type) {
 
   
 var setDataInWorkSheet = function(ws,type , item, index) {
-    ws.row(index+2).setHeight(120);
-    ws.cell(index+2,1).string(item.srcId.toString());
-    ws.cell(index+2,2).string(item.washType);
-    ws.cell(index+2,3).string(item.brand);
 
-    if(item.srcType == 'o') {
+
+    let boldStyle = {
+        alignment:{
+            vertical: 'top'
+        },
+        font:{
+            bold:true,
+            size:14
+        }
+    };
+
+    let wrapStyle = {
+        alignment:{
+            wrapText: true,
+            vertical: 'top'
+        },
+        font:{
+            size:12
+        }
+    };
+
+    let topAlignmentStyle = {
+        alignment:{
+            vertical: 'top'
+        },
+        font:{
+            size:12
+        }
+    }
+
+    ws.row(index+2).setHeight(120);
+    ws.cell(index+2,1).string(item.srcId.toString()).style(topAlignmentStyle);
+    ws.cell(index+2,2).string(item.washType).style(topAlignmentStyle);
+    ws.cell(index+2,3).string(item.brand).style(topAlignmentStyle);
+
+    if(item.imgLinkTh != null) {
         const lastIdx = item.imgLinkTh.lastIndexOf('/');
         const uploadFolder = path.resolve('./images'+item.imgLinkTh.substring(lastIdx));
     
@@ -81,24 +119,24 @@ var setDataInWorkSheet = function(ws,type , item, index) {
         });
         pic.editAs = "twoCell";
 
-        ws.cell(index+2,5).string(item.name);
+        ws.cell(index+2,5).string(item.name).style(wrapStyle);
     } else {
         ws.cell(index+2,4).string('');
         ws.cell(index+2,5).string('');
     }
 
-    ws.cell(index+2,6).string(item.snCode);
-    ws.cell(index+2,7).string(item.washCode);
-    ws.cell(index+2,8).string(item.outDate);
+    ws.cell(index+2,6).string(item.snCode).style(boldStyle);
+    ws.cell(index+2,7).string(item.washCode).style(boldStyle);
+    ws.cell(index+2,8).string(item.outDate).style(wrapStyle);
 
     if(type == 'calc') {
-        ws.cell(index+2,9).string(item.inDate);
-        ws.cell(index+2,10).string(item.defaultPrice);
-        ws.cell(index+2,11).string(item.specialPrice);
-        ws.cell(index+2,12).string(item.pollutionPrice);
-        ws.cell(index+2,13).string(item.lightPrice);
-        ws.cell(index+2,14).string(item.brandPrice);
-        ws.cell(index+2,15).string(item.totalPrice);
+        ws.cell(index+2,9).string(item.inDate).style(wrapStyle);
+        ws.cell(index+2,10).string(item.defaultPrice).style(topAlignmentStyle);
+        ws.cell(index+2,11).string(item.specialPrice).style(topAlignmentStyle);
+        ws.cell(index+2,12).string(item.pollutionPrice).style(topAlignmentStyle);
+        ws.cell(index+2,13).string(item.lightPrice).style(topAlignmentStyle);
+        ws.cell(index+2,14).string(item.brandPrice).style(topAlignmentStyle);
+        ws.cell(index+2,15).string(item.totalPrice).style(boldStyle);
     }
 }
   
